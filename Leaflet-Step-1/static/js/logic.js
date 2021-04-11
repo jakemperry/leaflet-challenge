@@ -27,7 +27,8 @@ d3.json(earthquakesUrl).then(function(data) {
 
   function createFeatures(EQData){
     function onEachFeature(feature,layer){
-      layer.bindPopup("<h3>"+ feature.properties.place + "</h3><hr><p>"+ new Date(feature.properties.time)+"</p>");
+      feature.properties.mag = +feature.properties.mag
+      layer.bindPopup("<h3>"+ Number.parseFloat(feature.properties.mag).toPrecision(2) +"M, "+ feature.properties.place + "</h3><hr><p>"+ new Date(feature.properties.time)+"</p>");
     }
     var earthquakes = L.geoJSON(EQData, {
       onEachFeature: onEachFeature
