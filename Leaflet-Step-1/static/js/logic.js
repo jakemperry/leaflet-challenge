@@ -54,7 +54,7 @@ d3.json(queryUrl).then(function(data) {
     }
 
     L.circle([EQData[i].geometry.coordinates[1],longitude],
-      {radius: EQData[i].properties.mag * Math.cos((Math.PI/180)* EQData[i].geometry.coordinates[1]) * 20000,
+      {radius: ((EQData[i].properties.mag)**2) * Math.cos((Math.PI/180)* EQData[i].geometry.coordinates[1]) * 5000,
       color: "#000000",
       weight: 1, 
       fill: true,
@@ -67,6 +67,34 @@ d3.json(queryUrl).then(function(data) {
 
   }
 });
+
+// Set up the legend
+var legend = L.control({ position: "bottomright" });
+legend.onAdd = function() {
+  var div = L.DomUtil.create("div", "info legend");
+  var limits = [10,30,50,70,90,1000];
+  var colors = ["#1a9850","#91cf60","#d9ef8b","#fee08b","#fc8d59","#d73027"];
+  var labels = ["<10 km", "10 to 30 km", "30 to 50 km", "50 to 70 km", "70 to 90 km",">90 km"];
+
+  // Add min & max
+  var legendInfo = "<h3>Earthquake Depth</h3>" //+
+    // "<div class=\"labels\">" +
+    //   "<div class=\"min\">" + limits[0] + "</div>" +
+    //   "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+    // "</div>";
+
+  div.innerHTML = legendInfo;
+
+  limits.forEach(function(limit, index) {
+    labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+  });
+
+  div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+  return div;
+};
+
+// Adding legend to the map
+legend.addTo(myMap);
 
 
 // function createMap(earthquakes) {
