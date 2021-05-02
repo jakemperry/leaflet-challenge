@@ -1,5 +1,5 @@
 // Store our API endpoint inside queryUrl
-var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson";
 
 var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
@@ -46,14 +46,15 @@ d3.json(queryUrl).then(function(data) {
     }
 
     L.circle([EQData[i].geometry.coordinates[1],EQData[i].geometry.coordinates[0]],
-      {radius: EQData[i].properties.mag * 35000,
-      color: color, 
+      {radius: EQData[i].properties.mag * Math.cos((Math.PI/180)* EQData[i].geometry.coordinates[1]) * 20000,
+      color: "#000000",
+      weight: 1, 
       fill: true,
       fillColor: color,
-      fillOpacity: 0.8}
+      fillOpacity: 0.7}
       
       ).bindPopup(
-        "<h1>" + EQData[i].properties.title+"</h1> <hr> <h3>Date: " + new Date(EQData[i].properties.time) + "</h3>"
+        "<h1>" + EQData[i].properties.title+"</h1> <hr> <h3>Date: " + new Date(EQData[i].properties.time) + "<br> Depth: "+ EQData[i].geometry.coordinates[2]+" km</h3>"
       ).addTo(myMap)
 
   }
