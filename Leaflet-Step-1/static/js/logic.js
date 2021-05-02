@@ -74,22 +74,21 @@ legend.onAdd = function() {
   var div = L.DomUtil.create("div", "info legend");
   var limits = [10,30,50,70,90,1000];
   var colors = ["#1a9850","#91cf60","#d9ef8b","#fee08b","#fc8d59","#d73027"];
-  var labels = ["<10 km", "10 to 30 km", "30 to 50 km", "50 to 70 km", "70 to 90 km",">90 km"];
+  var labels=[];
+  var intervals = ["<10", "10 to 30", "30 to 50", "50 to 70", "70 to 90",">90"];
 
   // Add min & max
-  var legendInfo = "<h3>Earthquake Depth</h3>" //+
-    // "<div class=\"labels\">" +
-    //   "<div class=\"min\">" + limits[0] + "</div>" +
-    //   "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-    // "</div>";
+  var legendInfo = "<h3>Depth (km)</h3>" //+
+    "<div class=\"labels\">" +
+    "</div>";
 
   div.innerHTML = legendInfo;
 
   limits.forEach(function(limit, index) {
-    labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+    labels.push("<p style=\"line-height:1.5; margin:0; background-color: " + colors[index] +"\">"+ intervals[index]+"</p>");
   });
 
-  div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+  div.innerHTML += "<div>" + labels.join("") + "</div>";
   return div;
 };
 
