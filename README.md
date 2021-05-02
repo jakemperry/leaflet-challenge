@@ -16,3 +16,8 @@ Without cosine scaling, markers become larger as you get closer to the north and
 
 With cosine scaling, markers maintain size with comparable magnitudes, regardless of latitude:
 ![Image with cosine scaling](Images/MapWithCosineScaling.png)
+
+## Step 2
+
+# Tectonic Plates
+Tectonic plate GeoJSON data from this [GitHub repository](https://github.com/fraxen/tectonicplates)

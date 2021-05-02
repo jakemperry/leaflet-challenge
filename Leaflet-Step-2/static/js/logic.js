@@ -12,7 +12,7 @@ var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
 
 var myMap = L.map("map", {
   center: [
-    20, 200
+    20, 0
   ],
   zoom: 3,
   layers: [streetmap]
@@ -21,14 +21,16 @@ var myMap = L.map("map", {
 // Perform a GET request to the query URL
 d3.json(queryUrl).then(function(data) {
   // Once we get a response, send the data.features object to the createFeatures function
+  console.log("USGS Earthquake Data")
   console.log(data.features)
   var EQData = data.features;
+  var USGSQuakes = L.layerGroup();
 
   for (var i = 0; i < EQData.length; i++) {
 
     var longitude;
     if (EQData[i].geometry.coordinates[0] < 0) {
-      longitude= EQData[i].geometry.coordinates[0]+360;
+      longitude= EQData[i].geometry.coordinates[0]+0;
     } else {
       longitude = EQData[i].geometry.coordinates[0];
     }
@@ -63,9 +65,10 @@ d3.json(queryUrl).then(function(data) {
       
       ).bindPopup(
         "<h1>" + EQData[i].properties.title+"</h1> <hr> <h3>Date: " + new Date(EQData[i].properties.time) + "<br> Depth: "+ EQData[i].geometry.coordinates[2]+" km</h3>"
-      ).addTo(myMap)
+      ).addTo(USGSQuakes)
 
   }
+  USGSQuakes.addTo(myMap)
 });
 
 // Set up the legend
@@ -94,3 +97,18 @@ legend.onAdd = function() {
 
 // Adding legend to the map
 legend.addTo(myMap);
+
+var plateURL = "static/data/PB2002_boundaries.json"
+
+d3.json(plateURL).then(function(data) {
+  console.log('Tectonic Plate Data');
+  console.log(data.features)
+
+  var plateData = data.features
+
+  var plates = L.geoJSON(plateData,{
+    style: function (geoJsonFeature) {
+      
+      return {color: 'orange'}
+  }}).addTo(myMap)
+})
