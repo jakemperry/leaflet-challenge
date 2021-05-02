@@ -12,9 +12,9 @@ var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
 
 var myMap = L.map("map", {
   center: [
-    0, 0
+    20, 180
   ],
-  zoom: 2,
+  zoom: 3,
   layers: [streetmap]
 });
 
@@ -25,6 +25,14 @@ d3.json(queryUrl).then(function(data) {
   var EQData = data.features;
 
   for (var i = 0; i < EQData.length; i++) {
+
+    var longitude;
+    if (EQData[i].geometry.coordinates[0] < 0) {
+      longitude= EQData[i].geometry.coordinates[0]+360;
+    } else {
+      longitude = EQData[i].geometry.coordinates[0];
+    }
+
     var color = "";
     if (EQData[i].geometry.coordinates[2] < 10) {
       color = "#1a9850";
@@ -45,7 +53,7 @@ d3.json(queryUrl).then(function(data) {
       color = "#d73027";
     }
 
-    L.circle([EQData[i].geometry.coordinates[1],EQData[i].geometry.coordinates[0]],
+    L.circle([EQData[i].geometry.coordinates[1],longitude],
       {radius: EQData[i].properties.mag * Math.cos((Math.PI/180)* EQData[i].geometry.coordinates[1]) * 20000,
       color: "#000000",
       weight: 1, 
