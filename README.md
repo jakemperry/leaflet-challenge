@@ -1,8 +1,10 @@
 # Leaflet.js Challenge
 
-update readme to test step1 branch
+This repository contains two versions of an earthqake map.  The earthquake data are retrieved from [USGS](https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson)
 
-update to test new pull request
+Step 1 is a simple map of earthquakes with magnitude 2.5 or higher in the last month.  The circles representing the earthquakes are scaled based on the magnitude of the earthquake and colored based on the depth of the earthquake.
+
+Step 2 adds multiple basemaps and outlines of the tectonic plates.
 
 ## Step 1
 
@@ -12,12 +14,16 @@ Each earthquake location is marked with a circle.  The color of the circle refle
 ```radius: ((EQData[i].properties.mag)**2) * Math.cos((Math.PI/180)* EQData[i].geometry.coordinates[1]) * 5000```
 
 Without cosine scaling, markers become larger as you get closer to the north and south poles:
-![Image without cosine scaling](Images/MapWithoutCosineScaling.png)
+![Image without cosine scaling](Images/WITHOUTCosineScaling.png)
 
 With cosine scaling, markers maintain size with comparable magnitudes, regardless of latitude:
-![Image with cosine scaling](Images/MapWithCosineScaling.png)
+![Image with cosine scaling](Images/WithCosineScaling.png)
 
 ## Step 2
 
-# Tectonic Plates
+Step 2 of the map adds tectonic plates and multiple options for basemaps (street map, dark map, and satellite map).  Use the control in the upper right corner of the map to toggle which map you'd like as a basemap and which overlays (earthquakes and tectonic plates) to display over the basemap.
+
+![Step 2 Map](Images/Step2PlatesSatellite.png)
+
+### Tectonic Plates
 Tectonic plate GeoJSON data from this [GitHub repository](https://github.com/fraxen/tectonicplates)

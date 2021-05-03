@@ -14,7 +14,7 @@ var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
 // Create the map, add the streetmap
 var myMap = L.map("map", {
   center: [
-    20, 180  // Offset the map over the Pacific Ocean to show the "Ring of Fire"
+    20, 190  // Offset the map over the Pacific Ocean to show the "Ring of Fire"
   ],
   zoom: 3,
   layers: [streetmap]
